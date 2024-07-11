@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         echo json_encode(["message" => "La modification de l'élève a échouée"]);
       }
     } else {
-      echo json_encode(["message" => "Les données ne sont pas complètes"]);
+      echo json_encode(["message" => "Format d'une donnée incorrect"]);
     }
   } else {
-    echo json_encode(["message" => "Format d'une donnée incorrect"]);
+    echo json_encode(["message" => "Les données ne sont pas complètes"]);
   }
 } else {
   echo json_encode(["message" => "Méthode pas autorisée"]);
