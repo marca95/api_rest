@@ -12,11 +12,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = $database->getConnexion();
 
   $eleve = new Eleves($db);
-  $data = json_decode(file_get_contents("php://input"));
+
+  /**
+   * php://input, permet de lire les données brutes depuis le corps de la requete HTTP,
+   * utile pour obtenir des données JSON envoyées via une requete POST, PUT ou PATCH 
+   */
+
+  $data = json_decode(file_get_contents("php://input", false, null, 0, 10000));
 
   if (!empty($data->nom) && !empty($data->prenom) && !empty($data->annee)) {
-    $eleve->nom = htmlspecialchars($data->nom);
-    $eleve->prenom = htmlspecialchars($data->prenom);
+    $eleve->nom = htmlspecialchars($data->nom, ENT_QUOTES, 'UTF-8');
+    $eleve->prenom = htmlspecialchars($data->prenom, ENT_QUOTES, 'UTF-8');
     $eleve->annee = intval($data->annee);
 
     $result = $eleve->create();

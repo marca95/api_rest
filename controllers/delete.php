@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $db = $database->getConnexion();
 
   $eleve = new Eleves($db);
-  $data = json_decode(file_get_contents("php://input"));
+  $data = json_decode(file_get_contents("php://input", false, null, 0, 10000));
 
   if (!empty($data->id)) {
     $eleve->id = intval($data->id);
