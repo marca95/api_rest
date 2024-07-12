@@ -34,8 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $result = $cours->create();
       if ($result) {
         echo json_encode(["message" => "Cours ajouté avec succès"]);
+        http_response_code(201);
       } else {
         echo json_encode(["message" => "L'ajout du cours a échoué"]);
+        http_response_code(500);
       }
     }
   } else {
@@ -43,4 +45,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 } else {
   echo json_encode(["message" => "Méthode non autorisée"]);
+  http_response_code(405);
 }

@@ -20,9 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $data = $datas->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($data);
+    http_response_code(200);
   } else {
     echo json_encode(["message" => "Aucune donnée n'a été envoyée"]);
+    http_response_code(500);
   }
 } else {
   echo json_encode(["message" => "Méthode pas autorisée"]);
+  http_response_code(405);
 }

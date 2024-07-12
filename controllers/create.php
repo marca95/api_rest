@@ -28,12 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $eleve->create();
     if ($result) {
       echo json_encode(["message" => "Elève ajouté avec succès"]);
+      http_response_code(201);
     } else {
-      echo json_encode(["message" => "L'ajout de l'élève a échouéx"]);
+      echo json_encode(["message" => "L'ajout de l'élève a échoué"]);
+      http_response_code(500);
     }
   } else {
     echo json_encode(["message" => "Les données ne sont pas complètes"]);
   }
 } else {
   echo json_encode(["message" => "Méthode pas autorisée"]);
+  http_response_code(405);
 }
