@@ -17,13 +17,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   if (!empty($data->id)) {
     $eleve->id = intval($data->id);
 
-    $result = $eleve->delete();
-    if ($result) {
-      echo json_encode(["message" => "Elève supprimé avec succès"]);
-      http_response_code(200);
+    // Vérifier si l'id existe
+    $checkQuery = $db->prepare("SELECT * FROM eleves WHERE id = :id");
+    $checkQuery->bindParam(':id', $eleve->id);
+    $checkQuery->execute();
+
+    if ($checkQuery->rowCount() > 0) {
+      $result = $eleve->delete();
+      if ($result) {
+        echo json_encode(["message" => "Elève supprimé avec succès"]);
+        http_response_code(200);
+      } else {
+        echo json_encode(["message" => "La suppression de l'élève a échouée"]);
+        http_response_code(500);
+      }
     } else {
-      echo json_encode(["message" => "La suppression de l'élève a échouée"]);
-      http_response_code(500);
+      echo json_encode(["message" => "L'élève n'a pas été trouvé dans la base de données"]);
     }
   } else {
     echo json_encode(["message" => "Les données ne sont pas complètes"]);
